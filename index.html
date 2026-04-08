@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Classification</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        h1, h2, h3 { color: #333; }
+        ul { margin-left: 20px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 10px; }
+        table, th, td { border: 1px solid #999; }
+        th, td { padding: 8px; text-align: left; }
+    </style>
+</head>
+<body>
+
+<h1>Image Classification</h1>
+
+<h2>1. 定義</h2>
+<p>給電腦一張圖片，自動告訴你這張圖的所屬類別</p>
+<ul>
+    <li><b>影像預處理：</b>就像拍照後修圖一樣，電腦會進行裁剪、去雜訊或增強對比，讓後續辨識更清楚。</li>
+    <li><b>特徵提取：</b>最關鍵的一步。電腦需要找出這張圖的特點，例如它的顏色、紋理、形狀或空間關係。</li>
+    <li><b>分類器設計：</b>最後根據這些特點，決定它是哪一類。</li>
+</ul>
+
+<h2>2. 傳統方法 vs. 深度學習</h2>
+<p>在過去（傳統機器學習），科學家必須手動告訴電腦要看哪些特徵（如特定邊緣），但這非常沒效率，且容易被背景雜訊干擾。</p>
+<p>現在主流的是深度學習，像人類的大腦一樣，透過多層網路結構，一層一層地自動提取數據特徵，讓特徵更明顯、更容易分類。</p>
+
+<h2>3. CNN / DBN</h2>
+
+<h3>卷積神經網路 (CNN)</h3>
+<p>CNN 是專門為處理影像設計的，它模仿人類視覺系統的工作方式，不斷進行 convolution 和 subsampling。</p>
+
+<ul>
+    <li><b>卷積層 (Convolutional Layer)：</b>像是一個過濾器，在影像上滑動來尋找特徵。會生成多張 feature maps。</li>
+    <li><b>池化層 (Pooling Layer)：</b>縮小影像數據，只保留重要資訊，加快運算速度。</li>
+    <li><b>權重共享：</b>減少參數數量，大幅提升計算效率。</li>
+</ul>
+
+<p>最後透過全連接層完成分類。</p>
+
+<h3>深度信念網絡 (DBN)</h3>
+<p>DBN 是由多個 RBM 堆疊而成，透過「預訓練」與「微調」進行學習。相較 CNN，較能處理無標籤資料，但不專精影像。</p>
+
+<h3>比較表</h3>
+<table>
+    <tr>
+        <th>特性</th>
+        <th>DBN</th>
+        <th>CNN</th>
+    </tr>
+    <tr>
+        <td>主要架構</td>
+        <td>RBM 堆疊</td>
+        <td>卷積層 + 池化層 + 全連接層</td>
+    </tr>
+    <tr>
+        <td>訓練方式</td>
+        <td>預訓練 + 微調</td>
+        <td>反向傳播</td>
+    </tr>
+    <tr>
+        <td>特徵提取</td>
+        <td>單一特徵</td>
+        <td>多層次特徵</td>
+    </tr>
+    <tr>
+        <td>輸入處理</td>
+        <td>需手動特徵</td>
+        <td>直接處理影像</td>
+    </tr>
+    <tr>
+        <td>核心優勢</td>
+        <td>層次化抽象</td>
+        <td>權重共享、高容錯</td>
+    </tr>
+</table>
+
+<p><b>結論：</b>CNN 準確度遠高於 DBN，因為能多層次捕捉影像特徵。</p>
+
+<h2>一、CNN 設計動機</h2>
+<ul>
+    <li>全連接網路參數過多，容易過擬合</li>
+    <li>利用影像局部特徵與重複模式簡化模型</li>
+</ul>
+
+<h2>二、卷積層</h2>
+<ul>
+    <li><b>Receptive Field：</b>每個神經元只關注局部區域</li>
+    <li><b>Parameter Sharing：</b>同一濾鏡掃描整張圖</li>
+</ul>
+
+<h2>三、池化 (Pooling)</h2>
+<ul>
+    <li>Max Pooling：選取區域最大值</li>
+    <li>減少運算量</li>
+    <li>現代可選擇不使用</li>
+</ul>
+
+<h2>四、CNN 架構</h2>
+<ol>
+    <li>輸入：影像 Tensor（寬 × 高 × 通道）</li>
+    <li>處理：卷積層 + 池化層</li>
+    <li>輸出：Flatten + 全連接層 + Softmax</li>
+</ol>
+
+<h2>五、應用案例：AlphaGo</h2>
+<ul>
+    <li>將棋盤視為影像</li>
+    <li>48 通道特徵</li>
+    <li>不使用池化層</li>
+</ul>
+
+<h2>六、CNN 局限性</h2>
+<ul>
+    <li>對旋轉、縮放敏感</li>
+    <li>需透過 Data Augmentation 解決</li>
+</ul>
+
+</body>
+</html>
